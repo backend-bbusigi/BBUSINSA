@@ -11,4 +11,10 @@ public class CouponProduct {
     @Column(name = "coupon_product_id", nullable = false)
     private Long couponProductId;
 
+    @Column(name = "coupon_id", nullable = false)
+    private Long couponId;
+
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
+
 }

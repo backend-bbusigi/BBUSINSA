@@ -22,4 +22,10 @@ public class IssuedCoupon {
     @Column(name = "expired_at", nullable = false)
     private LocalDateTime expiredAt;
 
+    @Column(name = "coupon_id", nullable = false)
+    private Long couponId;
+
+    @Column(name = "member_id", nullable = false)
+    private Long memberId;
+
 }

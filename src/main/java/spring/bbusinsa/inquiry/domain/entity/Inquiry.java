@@ -14,4 +14,13 @@ public class Inquiry {
     @Column(name = "content", nullable = false, length = 255)
     private String content;
 
+    @Column(name = "member_id", nullable = false)
+    private Long memberId;
+
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
+
+    @Column(name = "market_id", nullable = false)
+    private Long marketId;
+
 }

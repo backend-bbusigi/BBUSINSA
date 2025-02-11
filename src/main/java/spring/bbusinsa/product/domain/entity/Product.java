@@ -24,4 +24,7 @@ public class Product {
 
 //    private json content;
 
+    @Column(name = "market_id", nullable = false)
+    private Long marketId;
+
 }
