@@ -1,0 +1,17 @@
+package spring.bbusinsa.inquiry.domain.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+
+@Entity @Getter
+@Table(name = "inquiries")
+public class Inquiry {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "inquiry_id", nullable = false)
+    private Long inquiryId;
+
+    @Column(name = "content", nullable = false, length = 255)
+    private String content;
+
+}
