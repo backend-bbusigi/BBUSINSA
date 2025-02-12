@@ -19,9 +19,6 @@ public class IssuedCoupon {
     @Column(name = "used_at", nullable = true)
     private LocalDateTime usedAt;
 
-    @Column(name = "expired_at", nullable = false)
-    private LocalDateTime expiredAt;
-
     @Column(name = "coupon_id", nullable = false)
     private Long couponId;
 

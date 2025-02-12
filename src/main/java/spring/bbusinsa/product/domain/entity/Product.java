@@ -12,17 +12,18 @@ public class Product {
     @Column(name = "product_id", nullable = false)
     private Long productId;
 
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Column(name = "price", nullable = false) //decimal 14,4
+    @Column(name = "price", nullable = false)
     private int price;
 
     @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
-//    private json content;
+    @Column(name = "content", nullable = false, length = 500)
+    private String content;
 
     @Column(name = "market_id", nullable = false)
     private Long marketId;

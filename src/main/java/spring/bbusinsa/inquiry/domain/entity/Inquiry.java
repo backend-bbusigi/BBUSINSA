@@ -11,7 +11,7 @@ public class Inquiry {
     @Column(name = "inquiry_id", nullable = false)
     private Long inquiryId;
 
-    @Column(name = "content", nullable = false, length = 255)
+    @Column(name = "content", nullable = false, length = 500)
     private String content;
 
     @Column(name = "member_id", nullable = false)

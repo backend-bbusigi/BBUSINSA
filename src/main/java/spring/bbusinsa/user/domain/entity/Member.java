@@ -19,10 +19,10 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name", nullable = false, length = 30)
     private String name;
 
-    @Column(name = "email", nullable = false, length = 255)
+    @Column(name = "email", nullable = false, length = 50)
     private String email;
 
 }

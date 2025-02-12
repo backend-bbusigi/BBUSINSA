@@ -12,7 +12,7 @@ public class Market {
     @Column(name = "market_id", nullable = false)
     private Long marketId;
 
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
     @Column(name = "category", nullable = false)

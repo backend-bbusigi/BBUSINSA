@@ -16,6 +16,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Column(name = "price", nullable = false)
+    private int price;
+
     @Column(name = "member_id", nullable = false)
     private Long memberId;
 }
