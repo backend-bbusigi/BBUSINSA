@@ -2,10 +2,11 @@ package spring.bbusinsa.inquiry.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import spring.bbusinsa.global.base.BaseEntity;
 
 @Entity @Getter
 @Table(name = "inquiries")
-public class Inquiry {
+public class Inquiry extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "inquiry_id", nullable = false)

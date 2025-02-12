@@ -2,11 +2,12 @@ package spring.bbusinsa.product.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import spring.bbusinsa.global.base.BaseEntity;
 import spring.bbusinsa.product.domain.enums.MarketCategory;
 
 @Entity @Getter
 @Table(name = "markets")
-public class Market {
+public class Market extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "market_id", nullable = false)

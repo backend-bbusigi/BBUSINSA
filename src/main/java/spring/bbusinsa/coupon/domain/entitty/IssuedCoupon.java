@@ -2,12 +2,13 @@ package spring.bbusinsa.coupon.domain.entitty;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import spring.bbusinsa.global.base.BaseEntity;
 
 import java.time.LocalDateTime;
 
 @Entity @Getter
 @Table(name = "issued_coupons")
-public class IssuedCoupon {
+public class IssuedCoupon extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "issued_coupon_id", nullable = false)
