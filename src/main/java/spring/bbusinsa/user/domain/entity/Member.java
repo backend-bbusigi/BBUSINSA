@@ -1,12 +1,18 @@
 package spring.bbusinsa.user.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import spring.bbusinsa.global.base.BaseEntity;
 import spring.bbusinsa.user.domain.enums.Gender;
 
+@Builder
 @Entity @Getter
 @Table(name = "members")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Member extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
