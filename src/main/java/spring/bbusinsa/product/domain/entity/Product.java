@@ -1,12 +1,18 @@
 package spring.bbusinsa.product.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import spring.bbusinsa.global.base.BaseEntity;
 import spring.bbusinsa.product.domain.enums.ProductCategory;
 
+@Builder
 @Entity @Getter
 @Table(name = "products")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

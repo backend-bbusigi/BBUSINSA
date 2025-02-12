@@ -2,6 +2,8 @@ package spring.bbusinsa.product.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import spring.bbusinsa.global.error.BbusinsaException;
+import spring.bbusinsa.global.error.ErrorType;
 
 @Getter
 @AllArgsConstructor
@@ -16,6 +18,6 @@ public enum ProductCategory {
                 return category;
             }
         }
-        return null;
+        throw new BbusinsaException(ErrorType.PRODUCT_CATEGORY_IS_INVALID);
     }
 }
