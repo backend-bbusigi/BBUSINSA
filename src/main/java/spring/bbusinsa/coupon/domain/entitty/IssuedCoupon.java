@@ -20,8 +20,9 @@ public class IssuedCoupon extends BaseEntity {
     @Column(name = "used_at", nullable = true)
     private LocalDateTime usedAt;
 
-    @Column(name = "coupon_id", nullable = false)
-    private Long couponId;
+    @ManyToOne
+    @JoinColumn(name = "coupon_id", nullable = false)
+    private Coupon coupon;
 
     @Column(name = "member_id", nullable = false)
     private Long memberId;

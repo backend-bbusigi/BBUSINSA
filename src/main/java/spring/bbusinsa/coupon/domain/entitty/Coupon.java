@@ -5,6 +5,7 @@ import lombok.Getter;
 import spring.bbusinsa.global.base.BaseEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity @Getter
 @Table(name = "coupons")
@@ -25,5 +26,11 @@ public class Coupon extends BaseEntity {
 
     @Column(name = "expired_at", nullable = false)
     private LocalDateTime expiredAt;
+
+    @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CouponProduct> couponProducts;
+
+    @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<IssuedCoupon> issuedCoupons;
 
 }

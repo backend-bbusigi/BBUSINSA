@@ -12,8 +12,9 @@ public class CouponProduct extends BaseEntity {
     @Column(name = "coupon_product_id", nullable = false)
     private Long couponProductId;
 
-    @Column(name = "coupon_id", nullable = false)
-    private Long couponId;
+    @ManyToOne
+    @JoinColumn(name = "coupon_id", nullable = false)
+    private Coupon coupon;
 
     @Column(name = "product_id", nullable = false)
     private Long productId;

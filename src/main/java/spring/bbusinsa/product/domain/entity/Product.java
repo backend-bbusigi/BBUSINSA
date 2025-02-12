@@ -26,7 +26,8 @@ public class Product extends BaseEntity {
     @Column(name = "content", nullable = false, length = 500)
     private String content;
 
-    @Column(name = "market_id", nullable = false)
-    private Long marketId;
+    @ManyToOne
+    @JoinColumn(name = "market_id", nullable = false)
+    private Market market;
 
 }

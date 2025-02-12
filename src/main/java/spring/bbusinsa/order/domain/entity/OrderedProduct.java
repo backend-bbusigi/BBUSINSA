@@ -12,8 +12,9 @@ public class OrderedProduct extends BaseEntity {
     @Column(name = "ordered_product_id", nullable = false)
     private Long orderedProductId;
 
-    @Column(name = "order_id", nullable = false)
-    private Long orderId;
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
     @Column(name = "product_id", nullable = false)
     private Long productId;

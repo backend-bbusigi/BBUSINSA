@@ -5,6 +5,8 @@ import lombok.Getter;
 import spring.bbusinsa.global.base.BaseEntity;
 import spring.bbusinsa.order.domain.enums.OrderStatus;
 
+import java.util.List;
+
 @Entity @Getter
 @Table(name = "orders")
 public class Order extends BaseEntity {
@@ -22,4 +24,8 @@ public class Order extends BaseEntity {
 
     @Column(name = "member_id", nullable = false)
     private Long memberId;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<OrderedProduct> orderedProducts;
+
 }

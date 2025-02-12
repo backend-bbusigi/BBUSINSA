@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import spring.bbusinsa.global.base.BaseEntity;
 
+import java.util.List;
+
 @Entity @Getter
 @Table(name = "markets")
 public class Market extends BaseEntity {
@@ -14,5 +16,8 @@ public class Market extends BaseEntity {
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
+
+    @OneToMany(mappedBy = "market", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Product> products;
 
 }
