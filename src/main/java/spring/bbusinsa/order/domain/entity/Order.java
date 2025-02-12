@@ -1,15 +1,21 @@
 package spring.bbusinsa.order.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import spring.bbusinsa.global.base.BaseEntity;
 import spring.bbusinsa.order.domain.enums.OrderStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Entity @Getter
 @Table(name = "orders")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

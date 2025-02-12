@@ -1,4 +1,4 @@
-package spring.bbusinsa.product.domain.dto.response;
+package spring.bbusinsa.product.domain.dto.response.market;
 
 import lombok.Builder;
 import spring.bbusinsa.product.domain.entity.Market;

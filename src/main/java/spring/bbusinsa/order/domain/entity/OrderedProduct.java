@@ -1,11 +1,17 @@
 package spring.bbusinsa.order.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import spring.bbusinsa.global.base.BaseEntity;
 
+@Builder
 @Entity @Getter
 @Table(name = "ordered_products")
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderedProduct extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,9 +7,10 @@ import spring.bbusinsa.global.error.BbusinsaException;
 import spring.bbusinsa.global.error.ErrorType;
 import spring.bbusinsa.product.domain.dto.request.MarketPostDto;
 import spring.bbusinsa.product.domain.dto.request.ProductPostDto;
-import spring.bbusinsa.product.domain.dto.response.MarketDetailDto;
-import spring.bbusinsa.product.domain.dto.response.MarketListDto;
-import spring.bbusinsa.product.domain.dto.response.ProductDetailDto;
+import spring.bbusinsa.product.domain.dto.response.market.MarketDetailDto;
+import spring.bbusinsa.product.domain.dto.response.market.MarketListDto;
+import spring.bbusinsa.product.domain.dto.response.product.ProductDetailDto;
+import spring.bbusinsa.product.domain.dto.response.product.ProductListDto;
 import spring.bbusinsa.product.domain.entity.Market;
 import spring.bbusinsa.product.domain.entity.Product;
 import spring.bbusinsa.product.domain.enums.ProductCategory;
@@ -28,7 +29,6 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     @Override
     public MarketDetailDto postMarket(MarketPostDto marketPostDto) {
-
         Market market = Market.builder()
                 .name(marketPostDto.name())
                 .build();
@@ -46,7 +46,6 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     @Override
     public ProductDetailDto postProduct(ProductPostDto productPostDto) {
-
         Market market = findMarketByName(productPostDto.marketName());
 
         Product product = Product.builder()
@@ -68,10 +67,23 @@ public class ProductServiceImpl implements ProductService {
         return ProductDetailDto.of(product);
     }
 
+    @Override
+    public ProductListDto getProductListOfMarket(Long marketId) {
+        Market market = findMarketById(marketId);
+        List<Product> productList = market.getProducts();
+        return ProductListDto.of(productList);
+    }
+
+    private Market findMarketById(Long marketId) {
+        return marketRepository.findById(marketId)
+                .orElseThrow(() -> new BbusinsaException(ErrorType.MARKET_NOT_FOUND));
+    }
+
     private Market findMarketByName(String name) {
         return marketRepository.findByName(name)
                 .orElseThrow(() -> new BbusinsaException(ErrorType.MARKET_NOT_FOUND));
     }
+
 
     private Product findProductById(Long productId) {
         return productRepository.findById(productId)

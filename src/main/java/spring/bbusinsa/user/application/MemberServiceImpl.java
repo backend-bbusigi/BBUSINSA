@@ -29,13 +29,13 @@ public class MemberServiceImpl implements MemberService {
 
         memberRepository.save(member);
 
-        return new MemberDetailDto(member.getMemberId(), member.getName(), member.getEmail(), member.getAge(), member.getGender());
+        return MemberDetailDto.of(member);
     }
 
     @Override
     public MemberDetailDto getMemberDetail(Long memberId) {
         Member member = findMemberById(memberId);
-        return new MemberDetailDto(member.getMemberId(), member.getName(), member.getEmail(), member.getAge(), member.getGender());
+        return MemberDetailDto.of(member);
     }
 
     private Member findMemberById(Long memberId) {

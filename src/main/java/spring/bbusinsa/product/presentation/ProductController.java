@@ -6,9 +6,10 @@ import spring.bbusinsa.global.response.ApiResponse;
 import spring.bbusinsa.product.application.ProductService;
 import spring.bbusinsa.product.domain.dto.request.MarketPostDto;
 import spring.bbusinsa.product.domain.dto.request.ProductPostDto;
-import spring.bbusinsa.product.domain.dto.response.MarketDetailDto;
-import spring.bbusinsa.product.domain.dto.response.MarketListDto;
-import spring.bbusinsa.product.domain.dto.response.ProductDetailDto;
+import spring.bbusinsa.product.domain.dto.response.market.MarketDetailDto;
+import spring.bbusinsa.product.domain.dto.response.market.MarketListDto;
+import spring.bbusinsa.product.domain.dto.response.product.ProductDetailDto;
+import spring.bbusinsa.product.domain.dto.response.product.ProductListDto;
 
 @RestController
 @RequestMapping("/products")
@@ -41,6 +42,13 @@ public class ProductController {
             @PathVariable(name = "productId") Long productId
     ) {
         return ApiResponse.success(productService.getProductDetail(productId));
+    }
+
+    @GetMapping("/{marketId}")
+    public ApiResponse<ProductListDto> getProductListOfMarket(
+            @PathVariable(name = "marketId") Long marketId
+    ) {
+        return ApiResponse.success(productService.getProductListOfMarket(marketId));
     }
 
 }
