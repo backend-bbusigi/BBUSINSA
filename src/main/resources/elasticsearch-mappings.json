@@ -1,0 +1,23 @@
+{
+  "mappings": {
+    "properties": {
+      "name": {
+        "type": "keyword",
+        "fields": {
+          "text": {
+            "type": "text"
+          }
+        }
+      },
+      "price": {
+        "type": "integer"
+      },
+      "category": {
+        "type": "keyword"
+      },
+      "content": {
+        "type": "text"
+      }
+    }
+  }
+}
