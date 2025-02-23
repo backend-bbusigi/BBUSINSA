@@ -31,4 +31,7 @@ public class ProductDocument {
     @Field(type = FieldType.Text)
     private String content;
 
+    @Field(type = FieldType.Keyword)
+    private String market;
+
 }

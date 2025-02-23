@@ -54,8 +54,10 @@ public class ProductController {
     }
 
     @GetMapping("/products/search")
-    public ApiResponse<ProductListDto> searchProducts() {
-        return ApiResponse.success(productSearchService.searchProductByName(""));
+    public ApiResponse<ProductListDto> searchProducts(
+            @RequestParam(name = "query") String query
+    ) {
+        return ApiResponse.success(productSearchService.searchProductByName(query));
     }
 
 }
