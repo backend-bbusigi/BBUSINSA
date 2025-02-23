@@ -1,19 +1,23 @@
 package spring.bbusinsa.product.domain.dto.response.product;
 
-import lombok.Builder;
 import spring.bbusinsa.product.domain.entity.Product;
+import spring.bbusinsa.product.infra.elasticSearch.domain.ProductDocument;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Builder
 public record ProductListDto(List<ProductDetailDto> productDetailDtoList) {
 
-    public static ProductListDto of(List<Product> productList) {
-        return ProductListDto.builder()
-                .productDetailDtoList(productList.stream()
-                        .map(ProductDetailDto::of)
-                        .collect(Collectors.toList()))
-                .build();
+    public static <T>ProductListDto of(List<T> productList) {
+        return new ProductListDto(
+            productList.stream()
+                    .map(product -> {
+                        if (product instanceof Product p) {
+                            return ProductDetailDto.of(p);
+                        } else if (product instanceof ProductDocument d) {
+                            return ProductDetailDto.of(d);
+                        }
+                        throw new IllegalArgumentException("Unsupported type: " + product.getClass());
+                    }).toList()
+        );
     }
 }

@@ -1,9 +1,8 @@
 package spring.bbusinsa.product.domain.dto.response.product;
 
-import lombok.Builder;
 import spring.bbusinsa.product.domain.entity.Product;
+import spring.bbusinsa.product.infra.elasticSearch.domain.ProductDocument;
 
-@Builder
 public record ProductDetailDto(Long productId,
                                String marketName,
                                String productName,
@@ -12,13 +11,24 @@ public record ProductDetailDto(Long productId,
                                String content) {
 
     public static ProductDetailDto of(Product product) {
-        return ProductDetailDto.builder()
-                .productId(product.getProductId())
-                .marketName(product.getMarket().getName())
-                .productName(product.getName())
-                .price(product.getPrice())
-                .category(product.getCategory().name())
-                .content(product.getContent())
-                .build();
+        return new ProductDetailDto(
+                product.getProductId(),
+                product.getMarket().getName(),
+                product.getName(),
+                product.getPrice(),
+                product.getCategory().name(),
+                product.getContent()
+        );
+    }
+
+    public static ProductDetailDto of(ProductDocument productDocument) {
+        return new ProductDetailDto(
+                productDocument.getProductId(),
+                productDocument.getMarket(),
+                productDocument.getName(),
+                productDocument.getPrice(),
+                productDocument.getCategory(),
+                productDocument.getContent()
+        );
     }
 }

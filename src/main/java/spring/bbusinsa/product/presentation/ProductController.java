@@ -3,6 +3,7 @@ package spring.bbusinsa.product.presentation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import spring.bbusinsa.global.response.ApiResponse;
+import spring.bbusinsa.product.application.ProductSearchService;
 import spring.bbusinsa.product.application.ProductService;
 import spring.bbusinsa.product.domain.dto.request.MarketPostDto;
 import spring.bbusinsa.product.domain.dto.request.ProductPostDto;
@@ -17,6 +18,7 @@ import spring.bbusinsa.product.domain.dto.response.product.ProductListDto;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductSearchService productSearchService;
 
     @PostMapping("/markets")
     public ApiResponse<MarketDetailDto> postMarket(
@@ -49,6 +51,11 @@ public class ProductController {
             @PathVariable(name = "marketId") Long marketId
     ) {
         return ApiResponse.success(productService.getProductListOfMarket(marketId));
+    }
+
+    @GetMapping("/products/search")
+    public ApiResponse<ProductListDto> searchProducts() {
+        return ApiResponse.success(productSearchService.searchProductByName(""));
     }
 
 }
