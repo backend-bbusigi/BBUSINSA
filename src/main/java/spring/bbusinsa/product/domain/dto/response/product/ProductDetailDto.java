@@ -23,7 +23,7 @@ public record ProductDetailDto(Long productId,
 
     public static ProductDetailDto of(ProductDocument productDocument) {
         return new ProductDetailDto(
-                productDocument.getId(),
+                productDocument.getProductId(),
                 productDocument.getMarket(),
                 productDocument.getName(),
                 productDocument.getPrice(),
