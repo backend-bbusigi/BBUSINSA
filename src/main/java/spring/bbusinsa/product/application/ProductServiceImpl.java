@@ -16,6 +16,8 @@ import spring.bbusinsa.product.domain.entity.Product;
 import spring.bbusinsa.product.domain.enums.ProductCategory;
 import spring.bbusinsa.product.domain.repository.MarketRepository;
 import spring.bbusinsa.product.domain.repository.ProductRepository;
+import spring.bbusinsa.product.infra.elasticSearch.domain.ProductDocument;
+import spring.bbusinsa.product.infra.elasticSearch.domain.ProductSearchRepository;
 
 import java.util.List;
 
@@ -24,15 +26,20 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductSearchRepository productSearchRepository;
     private final MarketRepository marketRepository;
 
     @Transactional
     @Override
     public MarketDetailDto postMarket(MarketPostDto marketPostDto) {
+
+        if (isExistingMarket(marketPostDto.name())) {
+            throw new BbusinsaException(ErrorType.DUPLICATE_MARKET_NAME);
+        }
+
         Market market = Market.builder()
                 .name(marketPostDto.name())
                 .build();
-
         marketRepository.save(market);
 
         return MarketDetailDto.of(market);
@@ -55,8 +62,17 @@ public class ProductServiceImpl implements ProductService {
                 .content(productPostDto.content())
                 .market(market)
                 .build();
-
         productRepository.save(product);
+
+        ProductDocument productDocs = ProductDocument.builder()
+                .productId(product.getProductId())
+                .price(product.getPrice())
+                .name(product.getName())
+                .category(product.getCategory().name())
+                .content(product.getContent())
+                .market(market.getName())
+                .build();
+        productSearchRepository.save(productDocs);
 
         return ProductDetailDto.of(product);
     }
@@ -84,6 +100,9 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new BbusinsaException(ErrorType.MARKET_NOT_FOUND));
     }
 
+    private boolean isExistingMarket(String name) {
+        return marketRepository.findByName(name).isPresent();
+    }
 
     private Product findProductById(Long productId) {
         return productRepository.findById(productId)

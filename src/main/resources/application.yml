@@ -1,3 +1,29 @@
 spring:
   application:
     name: bbusinsa
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  sql:
+    init:
+      platform: mysql
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+    properties:
+      format_sql: true
+
+  elasticsearch:
+#    username: elastic
+#    password:
+    uris: localhost:9200
+
+logging:
+  level:
+    org.elasticsearch.client: DEBUG
+
