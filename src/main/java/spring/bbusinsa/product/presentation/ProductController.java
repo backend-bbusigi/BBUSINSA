@@ -53,7 +53,7 @@ public class ProductController {
         return ApiResponse.success(productService.getProductListOfMarket(marketId));
     }
 
-    @GetMapping("/products/search")
+    @GetMapping("/search")
     public ApiResponse<ProductListDto> searchProducts(
             @RequestParam(name = "query") String query
     ) {
