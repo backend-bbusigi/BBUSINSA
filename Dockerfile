@@ -1,12 +1,17 @@
-# base-image
 FROM openjdk:17-jdk-slim
-# 변수 설정 (빌드파일의 경로)
-ARG JAR_FILE=*.jar
-# 빌드 파일을 컨테이너로 복사
-COPY ${JAR_FILE} app.jar
-# jar 파일 실행
-ENTRYPOINT ["java", "-jar", "/app.jar"]
 
+# Set the timezone to Asia/Seoul
+ENV TZ=Asia/Seoul
+RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ADD src dest
-ADD hom* /mydir/
+# Set the working directory
+WORKDIR /app
+
+# Copy the built JAR file into the container
+COPY ./build/libs/*.jar app.jar
+
+# Expose the port your application will run on
+EXPOSE 8080
+
+# Command to run the JAR file
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
