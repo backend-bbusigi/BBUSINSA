@@ -24,9 +24,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: make application-secret.yml
+      - name: make application-local.yml
         run: |
-          touch ./src/main/resources/application-secret.yml
+          touch ./src/main/resources/application-local.yml
           echo "${{ secrets.APPLICATION_LOCAL }}" > ./src/main/resources/application-local.yml
         shell: bash
 
