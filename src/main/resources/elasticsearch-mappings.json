@@ -1,5 +1,8 @@
 {
   "properties": {
+    "productId": {
+      "type": "long"
+    },
     "name": {
       "type": "keyword",
       "fields": {

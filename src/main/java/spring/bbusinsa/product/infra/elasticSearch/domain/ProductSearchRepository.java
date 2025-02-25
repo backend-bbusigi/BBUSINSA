@@ -6,11 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductSearchRepository extends ElasticsearchRepository<ProductDocument, Long> {
+public interface ProductSearchRepository extends ElasticsearchRepository<ProductDocument, String> {
 
-    List<ProductDocument> findByName(String name);
-    List<ProductDocument> findByCategory(String category);
-    List<ProductDocument> findByMarket(String market);
     List<ProductDocument> findByPriceIsBetween(int min, int max);
 
 }

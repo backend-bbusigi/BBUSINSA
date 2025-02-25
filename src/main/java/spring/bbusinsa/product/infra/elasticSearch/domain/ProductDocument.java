@@ -1,5 +1,6 @@
 package spring.bbusinsa.product.infra.elasticSearch.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.annotations.*;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 @Getter
 @AllArgsConstructor

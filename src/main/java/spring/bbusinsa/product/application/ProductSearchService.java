@@ -4,6 +4,7 @@ import spring.bbusinsa.product.domain.dto.response.product.ProductListDto;
 
 public interface ProductSearchService {
 
-    ProductListDto searchProductByName(String name);
+    ProductListDto searchProduct(String name, String category, String market);
+    ProductListDto searchProductByPriceRange(int minPrice, int maxPrice);
 
-}
+    }
