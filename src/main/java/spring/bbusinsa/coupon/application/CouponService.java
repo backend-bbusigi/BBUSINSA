@@ -4,5 +4,7 @@ public interface CouponService {
 
     void reduceCouponStock(Long couponId);
 
-    void reduceCouponStockWithLock(Long couponId);
+    void reduceCouponStockWithDistributedLock(Long couponId);
+
+    void reduceCouponStockWithSpinLock(Long couponId);
 }

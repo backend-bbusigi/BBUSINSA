@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.bbusinsa.coupon.domain.entitty.TestCoupon;
@@ -22,6 +23,7 @@ public class CouponServiceImpl implements CouponService {
     private final CouponTransactionService couponTransactionService;
 
     private final RedissonClient redissonClient;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     @Override
     @Transactional
@@ -44,7 +46,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public void reduceCouponStockWithLock(Long couponId) {
+    public void reduceCouponStockWithDistributedLock(Long couponId) {
         RLock lock = redissonClient.getLock("coupon:" + couponId);
         boolean isLocked = false;
 
@@ -70,5 +72,35 @@ public class CouponServiceImpl implements CouponService {
                 log.info("🔓 [쿠폰 차감] 쿠폰 ID: {} - 락 해제 완료", couponId);
             }
         }
+    }
+
+    @Override
+    public void reduceCouponStockWithSpinLock(Long couponId) {
+        try {
+            while (!lock(couponId)) {
+                log.warn("🚨 [쿠폰 차감] 쿠폰 ID: {} - 락 획득 실패: 다른 스레드가 이미 사용 중", couponId);
+                Thread.sleep(10);
+            }
+
+            log.info("✅ [쿠폰 차감] 쿠폰 ID: {} - 락 획득 성공! 처리 시작", couponId);
+            couponTransactionService.reduceCouponStockWithTransaction(couponId);
+            log.info("🎉 [쿠폰 차감] 쿠폰 ID: {} - 차감 완료!", couponId);
+
+        } catch (InterruptedException e) {
+            log.error("❌ [쿠폰 차감] 쿠폰 ID: {} - 락 획득 중 인터럽트 발생!", couponId, e);
+            throw new BbusinsaException(ErrorType.LOCK_ACQUISITION_FAILED);
+        } finally {
+            unlock(couponId);
+            log.info("🔓 [쿠폰 차감] 쿠폰 ID: {} - 락 해제 완료", couponId);
+        }
+    }
+
+    private Boolean lock(Long couponId) {
+        return redisTemplate.opsForValue()
+                .setIfAbsent("coupon:" + couponId, couponId, 5L, TimeUnit.SECONDS);
+    }
+
+    private void unlock(Long couponId) {
+        redisTemplate.delete("coupon:" + couponId);
     }
 }
