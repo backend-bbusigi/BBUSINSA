@@ -58,7 +58,7 @@ class CouponServiceImplTest {
     }
 
     @Test
-    void 쿠폰차감_동시성100명_테스트() throws InterruptedException {
+    void 분산락_쿠폰차감_동시성100명_테스트() throws InterruptedException {
         int numberOfThreads = 100;
         ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
         CountDownLatch latch = new CountDownLatch(numberOfThreads);
@@ -66,8 +66,34 @@ class CouponServiceImplTest {
         for (int i = 0; i < numberOfThreads; i++) {
             executorService.submit(() -> {
                 try {
-                    // 분산락 적용 메서드 호출 (락의 key는 쿠폰의 name으로 설정)
-                    couponService.reduceCouponStockWithLock(coupon.getId());
+                    // 분산락 적용 메서드 호출 (락의 key는 쿠폰의 id로 설정)
+                    couponService.reduceCouponStockWithDistributedLock(coupon.getId());
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+
+        TestCoupon persistCoupon = testCouponRepository.findById(coupon.getId())
+                .orElseThrow(() -> new BbusinsaException(ErrorType.COUPON_NOT_FOUND));
+
+        assertThat(persistCoupon.getAvailableStock()).isZero();
+        System.out.println("잔여 쿠폰 갯수 = " + persistCoupon.getAvailableStock());
+    }
+
+    @Test
+    void 스핀락_쿠폰차감_동시성100명_테스트() throws InterruptedException {
+        int numberOfThreads = 100;
+        ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
+        CountDownLatch latch = new CountDownLatch(numberOfThreads);
+
+        for (int i = 0; i < numberOfThreads; i++) {
+            executorService.submit(() -> {
+                try {
+                    // 스핀락 적용 메서드 호출 (락의 key는 쿠폰의 id로 설정)
+                    couponService.reduceCouponStockWithSpinLock(coupon.getId());
                 } finally {
                     latch.countDown();
                 }
