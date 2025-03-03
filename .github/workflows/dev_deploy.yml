@@ -21,20 +21,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
       - name: make application-local.yml
         run: |
           touch ./src/main/resources/application-local.yml
           echo "${{ secrets.APPLICATION_LOCAL }}" > ./src/main/resources/application-local.yml
         shell: bash
-
-      - name: Build with Gradle Wrapper
-        run: |
-          ./gradlew --stop && ./gradlew clean --refresh-dependencies
-          ./gradlew clean build
-          ls -l build/libs 
 
       - name: Build Docker Image
         run: |
