@@ -11,6 +11,10 @@ public enum ErrorType {
 
     DEFAULT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.E500, "An unexpected error has occurred.", LogLevel.ERROR),
 
+    COUPON_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404, "Coupon not found.", LogLevel.ERROR),
+    COUPON_NOT_EXIST(HttpStatus.NOT_FOUND, ErrorCode.E500, "Coupon not exist.", LogLevel.ERROR),
+    LOCK_ACQUISITION_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.E500, "Lock acquisition failed.", LogLevel.ERROR),
+
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404, "Member not found.", LogLevel.ERROR),
     MEMBER_GENDER_IS_INVALID(HttpStatus.BAD_REQUEST, ErrorCode.E400, "Member Gender Is Not Available.", LogLevel.ERROR),
 

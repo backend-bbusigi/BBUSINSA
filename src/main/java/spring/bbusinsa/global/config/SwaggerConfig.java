@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
                 description = "Backend Bbusigi",
                 version = "v1"),
         servers = {
-                @Server(url = "http://localhost",
+                @Server(url = "http://localhost:8080",
                         description = "서버 URL"),
         }
 )
