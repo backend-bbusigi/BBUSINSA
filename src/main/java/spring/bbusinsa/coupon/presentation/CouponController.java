@@ -21,9 +21,15 @@ public class CouponController {
         return ApiResponse.success();
     }
 
-    @GetMapping("/claim/lock/{couponId}")
-    public ApiResponse<?> claimByLock(@PathVariable Long couponId) {
-        couponService.reduceCouponStockWithLock(couponId);
+    @GetMapping("/claim/distributed/{couponId}")
+    public ApiResponse<?> claimByRedissonLock(@PathVariable Long couponId) {
+        couponService.reduceCouponStockWithDistributedLock(couponId);
+        return ApiResponse.success();
+    }
+
+    @GetMapping("/claim/spin/{couponId}")
+    public ApiResponse<?> claimBySpinLock(@PathVariable Long couponId) {
+        couponService.reduceCouponStockWithSpinLock(couponId);
         return ApiResponse.success();
     }
 }
